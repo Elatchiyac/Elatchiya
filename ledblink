@@ -1,0 +1,49 @@
+variables {
+  msTimer blinkTimer;
+  int state = 0;
+}
+
+// Initialization function
+on start {
+  setTimer(blinkTimer, 500); // Start timer with 500ms
+}
+
+// Timer handler – toggles RGB "LEDs"
+on timer blinkTimer {
+  // Simulate LED blinking using state
+  switch (state) {
+    case 0:
+      output(RGB.Red, 1);   // Turn on RED
+      output(RGB.Green, 0);
+      output(RGB.Blue, 0);
+      break;
+
+    case 1:
+      output(RGB.Red, 0);
+      output(RGB.Green, 1); // Turn on GREEN
+      output(RGB.Blue, 0);
+      break;
+
+    case 2:
+      output(RGB.Red, 0);
+      output(RGB.Green, 0);
+      output(RGB.Blue, 1);  // Turn on BLUE
+      break;
+
+    case 3:
+      output(RGB.Red, 1);
+      output(RGB.Green, 1);
+      output(RGB.Blue, 1);  // All ON = White
+      break;
+
+  default:
+      output(RGB.Red, 0);
+      output(RGB.Green, 0);
+      output(RGB.Blue, 0);  // All OFF
+      state = -1;
+      break;
+  }
+
+  state++;
+  setTimer(blinkTimer, 500); // Restart timer every 500ms
+}
